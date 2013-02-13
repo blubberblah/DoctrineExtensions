@@ -83,6 +83,7 @@ class LoggableListener extends MappedEventSubscriber
     public function getSubscribedEvents()
     {
         return array(
+            'onClear',
             'onFlush',
             'loadClassMetadata',
             'postPersist'
@@ -174,6 +175,28 @@ class LoggableListener extends MappedEventSubscriber
     protected function prePersistLogEntry($logEntry, $object)
     {
 
+    }
+
+    /**
+     * Clears the entity cache.
+     *
+     * @param OnClearEventArgs $evt Event
+     *
+     * @return void
+     *
+     * @throws \RuntimeException If claring of dedicated entity type is requested
+     */
+    public function onClear(OnClearEventArgs $evt)
+    {
+        /*
+        if (!$evt->clearsAllEntities()) {
+            throw new \RuntimeException(
+                'partial clear -> EntityManager::clear(<EntityClassName>) not supported '
+                . ' currently only clearing all wrapped entities implemented'
+            );
+        }
+        AbstractWrapper::clear();
+        */
     }
 
     /**
